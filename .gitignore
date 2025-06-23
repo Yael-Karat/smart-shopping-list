@@ -14,3 +14,7 @@ ENV/
 # OS files
 .DS_Store
 Thumbs.db
+
+# SQLite database
+*.db
+instance/
