@@ -6,6 +6,12 @@ from app import app, db
 from app.models import User
 
 
+@app.route('/')
+@login_required
+def home():
+    return render_template('home.html')
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -49,3 +55,25 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+
+@app.route('/lists')
+@login_required
+def lists():
+    return render_template('lists.html')
+
+
+@app.route('/add-list', methods=['GET', 'POST'])
+@login_required
+def add_list():
+    if request.method == 'POST':
+        # כאן תוסיף לוגיקה לשמירת הרשימה בבסיס הנתונים
+        flash('הרשימה נוספה בהצלחה!')
+        return redirect(url_for('lists'))
+    return render_template('add_list.html')
+
+
+@app.route('/recommendations')
+@login_required
+def recommendations():
+    return render_template('recommendations.html')
