@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}רשימת קניות חכמה{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>🛒 רשימת קניות חכמה</h1>
+        <a href="{{ url_for('logout') }}" class="logout-link" style="color: white; text-decoration: none; font-weight: bold;">התנתק</a>
+    </div>
+</header>
+
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

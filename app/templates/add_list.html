@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}הוספת רשימה חדשה{% endblock %}
+
+{% block content %}
+  <h2>הוספת רשימה חדשה</h2>
+  <form method="POST" action="{{ url_for('add_list') }}">
+    <input type="text" name="list_name" placeholder="שם הרשימה" required>
+    <button type="submit">הוסף</button>
+  </form>
+{% endblock %}

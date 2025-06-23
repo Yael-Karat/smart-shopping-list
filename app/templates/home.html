@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}דף הבית{% endblock %}
+
+{% block content %}
+<h2>ברוכה הבאה, {{ current_user.username }}!</h2>
+<p>כאן תוכלי לנהל את רשימות הקניות שלך.</p>
+<ul>
+    <li><a href="{{ url_for('lists') }}">צפייה ברשימות</a></li>
+    <li><a href="{{ url_for('add_list') }}">הוספת רשימה חדשה</a></li>
+    <li><a href="{{ url_for('recommendations') }}">המלצות לפי מוצרים</a></li>
+</ul>
+
+{% endblock %}
