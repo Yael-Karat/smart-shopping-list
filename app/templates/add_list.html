@@ -3,9 +3,14 @@
 {% block title %}הוספת רשימה חדשה{% endblock %}
 
 {% block content %}
-  <h2>הוספת רשימה חדשה</h2>
-  <form method="POST" action="{{ url_for('add_list') }}">
-    <input type="text" name="list_name" placeholder="שם הרשימה" required>
-    <button type="submit">הוסף</button>
+  <h2>הוספת רשימת קניות חדשה</h2>
+  <form method="POST">
+    <label for="name">שם הרשימה:</label>
+    <input type="text" name="name" id="name" required>
+
+    <label for="items">פריטים (כל שורה = פריט. אפשר גם קטגוריה: שם, קטגוריה):</label>
+    <textarea name="items" id="items" rows="6" placeholder="חלב, מוצרי חלב\nלחם, מאפים\nעגבנייה, ירקות"></textarea>
+
+    <button type="submit">שמור</button>
   </form>
 {% endblock %}
