@@ -1,9 +1,33 @@
 {% extends "base.html" %}
-
-{% block title %}המלצות לפי מוצרים{% endblock %}
+{% block title %}המלצות מוצרים{% endblock %}
 
 {% block content %}
-  <h2>המלצות לפי מוצרים</h2>
-  <p>כאן תוצגנה המלצות חכמות על מוצרים.</p>
-  <!-- אפשר להוסיף המלצות דינמיות בעתיד -->
+  <h2>המלצות עבורך</h2>
+
+  {% if suggestions %}
+    <form method="POST">
+      <ul>
+        {% for s in suggestions %}
+          <li>
+            <label>
+              <input type="checkbox" name="items"
+                     value="{{ s.name }}|{{ s.category }}">
+              {{ s.name }}{% if s.category %} <em>({{ s.category }})</em>{% endif %}
+            </label>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <label for="target_list">הוסף לרשימה:</label>
+      <select id="target_list" name="target_list" required>
+        {% for lst in lists %}
+          <option value="{{ lst.id }}">{{ lst.name }}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit">הוסף פריטים מסומנים</button>
+    </form>
+  {% else %}
+    <p>אין עדיין מספיק נתונים כדי להמליץ – נסה שוב אחרי הוספת רשימות.</p>
+  {% endif %}
 {% endblock %}

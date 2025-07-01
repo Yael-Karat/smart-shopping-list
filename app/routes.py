@@ -11,7 +11,7 @@ from werkzeug.security import (
 )
 
 from flask import session
-
+from app.recommender import generate_recommendations
 from app import app, db
 from app.models import User, ShoppingList, Item
 
@@ -177,7 +177,23 @@ def delete_item(item_id):
 
 
 # ---------- המלצות (שלד) ----------
-@app.route("/recommendations")
+@app.route("/recommendations", methods=["GET", "POST"])
 @login_required
 def recommendations():
-    return render_template("recommendations.html")
+    if request.method == "POST":
+        # קבלת הפריטים המסומנים והוספתם לרשימה שנבחרה
+        list_id   = int(request.form.get("target_list"))
+        selected  = request.form.getlist("items")   # ["חלב|מוצרי חלב", ...]
+        for compound in selected:
+            name, category = compound.split("|")
+            db.session.add(Item(name=name, category=category, list_id=list_id))
+        db.session.commit()
+        flash("ההמלצות נוספו בהצלחה ✅", "success")
+        return redirect(url_for("lists"))
+
+    # GET – הצגת המלצות
+    suggestions = generate_recommendations(current_user.id)
+    user_lists  = ShoppingList.query.filter_by(user_id=current_user.id).all()
+    return render_template("recommendations.html",
+                           suggestions=suggestions,
+                           lists=user_lists)
