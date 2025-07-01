@@ -38,6 +38,13 @@
     {% endif %}
     {% endwith %}
 
+    {% if current_user.is_authenticated and request.endpoint != 'home' %}
+    <nav class="nav-buttons">
+        <button type="button" onclick="history.back()">⬅ חזור</button>
+        <a href="{{ url_for('home') }}">דף הבית 🏠</a>
+    </nav>
+    {% endif %}
+
     {% block content %}{% endblock %}
 </main>
 </body>

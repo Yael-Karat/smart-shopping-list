@@ -73,6 +73,29 @@ a:hover {
     text-decoration: underline;
 }
 
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.nav-buttons button,
+.nav-buttons a {
+    background-color: #eee;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 0.4rem 1rem;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-buttons button:hover,
+.nav-buttons a:hover {
+    background-color: #ddd;
+}
+
 ul {
     list-style: none;
     padding: 0;
