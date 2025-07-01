@@ -1,9 +1,39 @@
 {% extends "base.html" %}
-
-{% block title %}צפייה ברשימות{% endblock %}
-
+{% block title %}הרשימות שלי{% endblock %}
 {% block content %}
-  <h2>רשימות הקניות שלי</h2>
-  <p>כאן תוצג רשימת כל רשימות הקניות שלך.</p>
-  <!-- אפשר פה להכניס טבלה או רשימה דינמית בעתיד -->
+<h2>הרשימות שלי</h2>
+
+{% if lists %}
+  <ul>
+  {% for lst in lists %}
+    <li>
+      <strong>{{ lst.name }}</strong>
+      <a href="{{ url_for('edit_list', list_id=lst.id) }}">✏️</a>
+      <form action="{{ url_for('delete_list', list_id=lst.id) }}" method="POST" style="display:inline;">
+        <button type="submit" onclick="return confirm('למחוק את הרשימה?')">🗑️</button>
+      </form>
+
+      {% if lst.items %}
+        <ul>
+        {% for it in lst.items %}
+          <li>
+            {{ it.name }}{% if it.category %} <em>({{ it.category }})</em>{% endif %}
+            <a href="{{ url_for('edit_item', item_id=it.id) }}">✏️</a>
+            <form action="{{ url_for('delete_item', item_id=it.id) }}" method="POST" style="display:inline;">
+              <button type="submit" onclick="return confirm('למחוק את הפריט?')">🗑️</button>
+            </form>
+          </li>
+        {% endfor %}
+        </ul>
+      {% else %}
+        <p>אין פריטים ברשימה.</p>
+      {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>אין לך רשימות עדיין.</p>
+{% endif %}
+
+<a href="{{ url_for('add_list') }}">➕ הוספת רשימה חדשה</a>
 {% endblock %}
