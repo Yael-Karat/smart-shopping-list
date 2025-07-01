@@ -8,6 +8,8 @@ app.config.from_object("config.Config")
 db = SQLAlchemy(app)
 login = LoginManager(app)
 login.login_view = "login"
+login.login_message = None
+login.login_message_category = "none"
 
 
 @login.user_loader
