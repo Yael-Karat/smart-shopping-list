@@ -9,12 +9,35 @@
 <header>
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1>🛒 רשימת קניות חכמה</h1>
-        <a href="{{ url_for('logout') }}" class="logout-link" style="color: white; text-decoration: none; font-weight: bold;">התנתק</a>
+        <a href="{{ url_for('logout') }}" class="logout-link"
+           style="color: white; text-decoration: none; font-weight: bold;">התנתק</a>
     </div>
 </header>
 
-
 <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="flashes" role="alert" aria-live="polite">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        setTimeout(function () {
+          const flashItems = document.querySelectorAll('.flashes li');
+          flashItems.forEach(function (el) {
+            el.style.opacity = "0";
+            setTimeout(function () {
+              if (el.parentNode) el.remove();
+            }, 500);
+          });
+        }, 3000);
+    </script>
+
+    {% endif %}
+    {% endwith %}
+
     {% block content %}{% endblock %}
 </main>
 </body>
