@@ -1,15 +1,18 @@
 {% extends "base.html" %}
-
 {% block title %}התחברות{% endblock %}
 
 {% block content %}
-  <h2>התחברות</h2>
+<form method="POST" class="card">
+    <h2 class="text-center mb-4">🔐 התחברות</h2>
 
-  <form method="POST">
-    <input type="text" name="username" placeholder="שם משתמש" required><br>
-    <input type="password" name="password" placeholder="סיסמה" required><br>
-    <button type="submit">התחבר</button>
-  </form>
+    <input type="text" name="username" placeholder="שם משתמש" required>
+    <input type="password" name="password" placeholder="סיסמה" required>
 
-  <p>עדיין לא רשום? <a href="{{ url_for('register') }}">הירשם כאן</a></p>
+    <button class="w-100 mt-3">התחבר</button>
+
+    <p class="text-center mt-3">
+        עדיין אין חשבון?
+        <a href="{{ url_for('register') }}">להרשמה</a>
+    </p>
+</form>
 {% endblock %}

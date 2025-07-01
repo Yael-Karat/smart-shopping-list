@@ -1,25 +1,18 @@
 {% extends "base.html" %}
-
 {% block title %}הרשמה{% endblock %}
 
 {% block content %}
-  <h2>הרשמה</h2>
+<form method="POST" class="card">
+    <h2 class="text-center mb-4">✍️ הרשמה</h2>
 
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul style="color:red;">
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+    <input type="text" name="username" placeholder="שם משתמש" required>
+    <input type="password" name="password" placeholder="סיסמה" required>
 
-  <form method="POST">
-    <input type="text" name="username" placeholder="שם משתמש" required><br>
-    <input type="password" name="password" placeholder="סיסמה" required><br>
-    <button type="submit">הירשם</button>
-  </form>
+    <button class="w-100 mt-3">הרשמה</button>
 
-  <p>כבר רשום? <a href="{{ url_for('login') }}">התחבר כאן</a></p>
+    <p class="text-center mt-3">
+        כבר רשום?
+        <a href="{{ url_for('login') }}">להתחברות</a>
+    </p>
+</form>
 {% endblock %}

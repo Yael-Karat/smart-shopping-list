@@ -1,51 +1,73 @@
-<!doctype html>
-<html lang="he" dir="rtl">
+<!DOCTYPE html>
+<html lang="he" dir="rtl" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}רשימת קניות חכמה{% endblock %}</title>
+    <title>{% block title %}🛒רשימת קניות חכמה{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 <header>
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1>🛒 רשימת קניות חכמה</h1>
-        <a href="{{ url_for('logout') }}" class="logout-link"
-           style="color: white; text-decoration: none; font-weight: bold;">התנתק</a>
-    </div>
+    <h1>🛒 רשימת קניות חכמה</h1>
+    <nav class="top-nav">
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('home') }}">בית</a>
+        <a href="{{ url_for('logout') }}" class="logout-link">התנתק</a>
+        {% else %}
+        <a href="{{ url_for('login') }}">התחברות</a>
+        <a href="{{ url_for('register') }}">הרשמה</a>
+        {% endif %}
+    </nav>
+    <label class="theme-switch">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider"></span>
+    </label>
 </header>
-
 <main>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <ul class="flashes" role="alert" aria-live="polite">
-        {% for category, message in messages %}
-        <li class="{{ category }}">{{ message }}</li>
+        {% for cat, msg in messages %}
+        <li class="{{ cat }}">{{ msg }}</li>
         {% endfor %}
     </ul>
-
     <script>
-        setTimeout(function () {
-          const flashItems = document.querySelectorAll('.flashes li');
-          flashItems.forEach(function (el) {
-            el.style.opacity = "0";
-            setTimeout(function () {
-              if (el.parentNode) el.remove();
-            }, 500);
+        setTimeout(() => {
+          document.querySelectorAll('.flashes li').forEach(el => {
+            el.style.opacity = '0';
+            setTimeout(()=>el.remove(), 500);
           });
         }, 3000);
     </script>
-
     {% endif %}
     {% endwith %}
 
-    {% if current_user.is_authenticated and request.endpoint != 'home' %}
-    <nav class="nav-buttons">
-        <button type="button" onclick="history.back()">⬅ חזור</button>
-        <a href="{{ url_for('home') }}">דף הבית 🏠</a>
-    </nav>
-    {% endif %}
-
     {% block content %}{% endblock %}
 </main>
+{% if current_user.is_authenticated and request.endpoint != 'home' %}
+<button class="fab-back" onclick="history.back()">⬅</button>
+{% endif %}
+
+<footer>
+    © 2025 Yael Karat |
+    {% if current_user.is_authenticated %}מחובר/ת כ‑{{ current_user.username }}{% endif %}
+</footer>
+<script>
+    const body   = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+
+    // טען העדפה קודמת
+    if (localStorage.theme === 'dark') {
+      body.dataset.theme = 'dark';
+      toggle.checked = true;
+    }
+
+    toggle.addEventListener('change', () => {
+      body.dataset.theme = toggle.checked ? 'dark' : 'light';
+      localStorage.theme = body.dataset.theme;
+    });
+</script>
 </body>
 </html>
